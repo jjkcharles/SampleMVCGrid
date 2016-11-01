@@ -1,0 +1,32 @@
+﻿@using NonFactors.Mvc.Grid;
+@model IEnumerable<SampleMVCGrid.Models.Post>
+
+<html>
+    <head>
+        <link href="~/css/MvcGrid/mvc-grid.css" rel="stylesheet"  />
+        <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+        <script src="~/lib/MvcGrid/mvc-grid.js"></script>
+        <script>
+            $(function () {
+
+                $('.mvc-grid').mvcgrid({});
+            });
+        </script>
+    </head>
+    <body>
+        @(Html
+            .Grid(Model)
+            .Build(columns =>
+            {
+                columns.Add(Model => Model.Title).Titled("Title").Filterable(true).Sortable(true);
+                columns.Add(Model => Model.Comments.Count).Titled("No. of Comments").Filterable(true).Sortable(true);
+            })
+            .Filterable()
+            .Pageable(p=>p.RowsPerPage=4)
+            .Sortable()
+            .Empty("No records found!")
+        )
+    </body>
+</html>
